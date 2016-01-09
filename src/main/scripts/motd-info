@@ -1,0 +1,31 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+"""Print informations, which should be presented on every login"""
+
+from __future__ import print_function
+
+import sys
+import json
+
+from motd_info import MotdInfo
+
+
+def main():
+    """Executed when script is called directly"""
+    info = MotdInfo()
+    print('Logged in users:\n')
+    info.print_active_users()
+    try:
+        with open('/etc/default/motd-info') as json_file:
+            settings = json.load(json_file)
+        info.add_disks(settings['drives'])
+    except IOError:
+        sys.exit()
+    print('Memory/Disk usage on server:\n')
+    info.print_memory_usage()
+    info.print_disk_usage()
+
+
+if __name__ == '__main__':
+    main()

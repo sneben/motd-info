@@ -1,0 +1,82 @@
+====
+motd
+====
+
+Overview
+========
+A script that displays several informations. It is attended to run on
+every login of a user as addition to the **motd** output.
+
+Installation
+============
+To build the project follow these steps:
+
+.. code-block:: console
+
+   $ virtualenv venv
+   $ source venv/bin/activate
+   $ pip install pybuilder
+   $ pyb install_dependencies
+   $ pyb -v
+
+The generated install source can be found in ``target/dist/motd-info-0.1/``.
+Do what ever you want with the ``setup.py``.
+
+Configuration
+=============
+To define the disks, which should be displayed, create the file
+``/etc/default/motd-info`` with the following **json** content:
+
+.. code-block:: json
+
+    {
+        "drives": [
+            "/dev/sda1"
+        ]
+    }
+
+Execute the script on every login
+---------------------------------
+To execute the script on every login put the following script to
+``/etc/profile.d/``:
+
+.. code-block:: bash
+
+    #/bin/bash
+
+    function command_exists {
+        type "$1" &> /dev/null
+    }
+
+    if [[ "$(whoami)" == "user" ]]; then
+        command_exists motd-info && motd-info
+    fi
+
+Change ``user`` to your login user. The above example prevents the execution
+on every e.g. ``sudo -i``.
+
+Output
+======
+RAM
+---
+The memory usage is calculated by substracting the cached memory
+from the used memory.
+
+Example
+-------
+The output of the script looks like:
+
+.. code-block:: text
+
+    Logged in users:
+
+    USERNAME       FROM                   LOGIN@
+    user           192.168.0.1            2016-01-09 23:32:32
+
+    Memory/Disk usage on server:
+
+    RAM (208.3M):
+    [================>................................................................] 20.89%
+
+    /dev/sda1 (1.5G):
+    [========>........................................................................] 10.50%
