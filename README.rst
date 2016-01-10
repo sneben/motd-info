@@ -1,3 +1,9 @@
+.. image:: https://travis-ci.org/sneben/motd-info.svg?branch=master
+    :target: https://travis-ci.org/sneben/motd-info
+
+.. image:: https://coveralls.io/repos/sneben/motd-info/badge.svg?branch=master&service=github
+    :target: https://coveralls.io/github/sneben/motd-info?branch=master
+
 =========
 motd-info
 =========
@@ -42,7 +48,7 @@ To execute the script on every login put the following script to
 
 .. code-block:: bash
 
-    #/bin/bash
+    #!/bin/bash
 
     function command_exists {
         type "$1" &> /dev/null
