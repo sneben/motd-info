@@ -1,23 +1,34 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""Print informations, which should be presented on every login"""
+"""
+Usage:
+  backuptool [options]
+
+Options:
+  -h --help                Show this
+  -c --config CONFIG_FILE  Path to config file [default: /etc/default/motd-info]
+
+"""
 
 from __future__ import print_function
 
 import sys
 import json
 
+from docopt import docopt
 from motd_info import MotdInfo
 
 
 def main():
     """Executed when script is called directly"""
+    arguments = docopt(__doc__)
+    config_file = arguments['--config']
     info = MotdInfo()
     print('Logged in users:\n')
     info.print_active_users()
     try:
-        with open('/etc/default/motd-info') as json_file:
+        with open(config_file) as json_file:
             settings = json.load(json_file)
         info.add_disks(settings['drives'])
     except IOError:
