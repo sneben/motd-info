@@ -27,6 +27,7 @@ def main():
     info = MotdInfo()
     print('Logged in users:\n')
     info.print_active_users()
+    print('Memory/Disk usage on server:\n')
     info.print_memory_usage()
     try:
         with open(config_file) as json_file:
@@ -34,7 +35,6 @@ def main():
         info.add_disks(settings['drives'])
     except IOError:
         sys.exit()
-    print('Memory/Disk usage on server:\n')
     info.print_disk_usage()
 
 
