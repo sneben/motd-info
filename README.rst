@@ -36,6 +36,8 @@ To define the disks, which should be displayed, create the file
 .. code-block:: json
 
     {
+        "users": true,
+        "ram": true,
         "drives": [
             "/dev/sda1"
         ]

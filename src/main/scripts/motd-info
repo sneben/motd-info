@@ -24,18 +24,25 @@ def main():
     """Executed when script is called directly"""
     arguments = docopt(__doc__)
     config_file = arguments['--config']
-    info = MotdInfo()
-    print('Logged in users:\n')
-    info.print_active_users()
-    print('Memory/Disk usage on server:\n')
-    info.print_memory_usage()
     try:
         with open(config_file) as json_file:
             settings = json.load(json_file)
-        info.add_disks(settings['drives'])
     except IOError:
-        sys.exit()
-    info.print_disk_usage()
+        settings = {}
+    info = MotdInfo()
+    display_users = settings.get('users', True)
+    display_ram = settings.get('ram', True)
+    drives = settings.get('drives', None)
+    if display_users:
+        print('Logged in users:\n')
+        info.print_active_users()
+    if display_ram or drives:
+        print('Memory/Disk usage on server:\n')
+    if display_ram:
+        info.print_memory_usage()
+    if drives:
+        info.add_disks(settings['drives'])
+        info.print_disk_usage()
 
 
 if __name__ == '__main__':
