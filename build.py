@@ -21,10 +21,10 @@ default_task = ['clean', 'analyze', 'package']
 
 @init
 def set_properties(project):
+    project.depends_on('docopt')
+    project.depends_on('psutil')
     project.build_depends_on('unittest2')
     project.build_depends_on('mock')
-    project.build_depends_on('docopt')
-    project.depends_on('psutil')
 
 
 @task
